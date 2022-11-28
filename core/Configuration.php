@@ -3,15 +3,15 @@
 /**
  * Configuration.php  Global Configuration set-up.
  *
- * Copyright (C) 2022 Foodtech <alboresmariano@gmail.com>
+ * Copyright (C) 2022 Agronorte <alboresmariano@gmail.com>
  *
- * @package core.Foodtech
+ * @package core.Agronorte
  * @author  Mariano Alborés <alboresmariano@gmail.com>
  */
 
-namespace Foodtech\core;
+namespace Agronorte\core;
 
-use Foodtech\tools\Additional;
+use Agronorte\tools\Additional;
 
 class Configuration
 {
@@ -19,8 +19,8 @@ class Configuration
     /**
      * Configuration for templates
      */
-    const FANTASY                       = 'Planckfood';
-    const COMPANY                       = 'Planckfood';
+    const FANTASY                       = 'Agronorte';
+    const COMPANY                       = 'Agronorte';
     const ADDRESS1                      = '1441 Brickell Avenue #1018';
     const ADDRESS2                      = 'Miami, FL, 33131, United States';
     const PHONE                         = '+1 (786) 753-7839';
@@ -51,19 +51,6 @@ class Configuration
     const TTL_DAY                       = 86400;
     const TTL_WEEK                      = 604800;
     const TTL_MONTH                     = 2592000;
-    
-    const REDIS_CLIENT                  = 'cache-console';
-
-    /**
-     * Redis configurations by environment name
-     *
-     * @access public
-     * @static
-     * @var array
-     */
-    public static $redisClients = [
-        'cache-console'      => ['connectionString' => 'localhost:6379']
-    ];
     
     /**
      * Get Server and execution environment information

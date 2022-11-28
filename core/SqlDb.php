@@ -3,24 +3,19 @@
 /**
  * SqlDb.php  Connector for MySQL.
  *
- * Copyright (C) 2022 Foodtech <alboresmariano@gmail.com>
+ * Copyright (C) 2022 Agronorte <alboresmariano@gmail.com>
  *
- * @package core.Foodtech
+ * @package core.Agronorte
  * @author  Mariano Alborés <alboresmariano@gmail.com>
  */
 
-namespace Foodtech\core;
+namespace Agronorte\core;
 
-use Foodtech\core\RedisDb;
+use Agronorte\tools\Additional;
+use Agronorte\tools\Dotenv;
 
 class SqlDb
 {
-    /* Constants */
-    const DBHOST        = 'DBHOST';
-    const DBPASSWORD    = 'DBPASSWORD';
-    const DBUSERNAME    = 'DBUSERNAMEFOODTECH';
-    const PFDBNAME      = 'PFDBNAME';
-    
     /**
      * Return a PDO object for the given environment
      *
@@ -36,12 +31,17 @@ class SqlDb
         // if this is the first time we get called
         if (null === $pdo) 
         {
-            // get PDO from ini files
-            $client     = 'cache-console';
-            $host       = RedisDb::getClient($client)->get(self::DBHOST);
-            $dbname     = RedisDb::getClient($client)->get(self::PFDBNAME);
-            $username   = RedisDb::getClient($client)->get(self::DBUSERNAME);
-            $password   = RedisDb::getClient($client)->get(self::DBPASSWORD);
+            // get PDO from .env files
+            Dotenv::load(realpath(dirname(__FILE__) . '/../.env'));
+            $host       = getenv('DBHOST');
+            $dbname     = getenv('DBDB');
+            $username   = getenv('DBUSER');
+            $password   = getenv('DBPASSWORD');
+
+            Additional::log("HOST", $host);
+            Additional::log("DBDB", $dbname);
+            Additional::log("DBUSER", $username);
+            Additional::log("DBPASSWORD", $password);
             
             // Set DSN
             $dsn    = 'mysql:host=' . $host . ';dbname=' . $dbname . ';charset=utf8';

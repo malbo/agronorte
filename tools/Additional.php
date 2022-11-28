@@ -4,19 +4,19 @@
  * Additional.php  General utilities.
  * Most of them are complementary from a JS function.
  *
- * Copyright (C) 2022 Foodtech <alboresmariano@gmail.com>
+ * Copyright (C) 2022 Agronorte <alboresmariano@gmail.com>
  *
- * @package tools.Foodtech
+ * @package tools.Agronorte
  * @author  Mariano Alborés <alboresmariano@gmail.com>
  */
 
-namespace Foodtech\tools;
+namespace Agronorte\tools;
 
 // simple autoloader according standard PSR-0
 require_once(realpath(dirname(__FILE__) . '/Autoload.php'));
 
-use Foodtech\core\Configuration;
-use Foodtech\tools\Scaling;
+use Agronorte\core\Configuration;
+use Agronorte\tools\Scaling;
 
 class Additional
 {
@@ -31,6 +31,33 @@ class Additional
         return !is_null($value) ? $value : null;
     }
     
+    /**
+     * SQL conditions format
+     * 
+     * @param array $conditions
+     * @return string
+     */
+    public static function conditions($conditions)
+    {
+        if (!empty($conditions))
+        {
+            $values = 'WHERE ';
+            foreach ($conditions as $key => $value)
+            { 
+                $values.= "{$key} = '{$value}' AND ";
+            }
+            
+            // remove last "AND"
+            $condition = substr($values, 0, -4);
+        }
+        else 
+        {
+            $condition = '';
+        }
+ 
+        return $condition;
+    }
+
     /**
      * Format number values
      * 
