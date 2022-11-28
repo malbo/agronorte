@@ -150,10 +150,6 @@ else
         var password    = $('#password').val();
         var security    = $('.g-recaptcha-response').val();
 
-        console.log("EMAIL: " + email);
-        console.log("PASSWORD: " + password);
-        console.log("SECURITY: " + security);
-
         // create params
         var params = {
             class:      'Secure',
@@ -167,14 +163,7 @@ else
             var data = jQuery.parseJSON(e);
             if(true === data.success)
             {
-                if (session === 'expired')
-                {
-                    window.location = file;
-                }
-                else
-                {
-                    window.location = data.location;
-                }  
+                window.location = data.location; 
             }
             else
             {

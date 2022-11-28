@@ -230,8 +230,6 @@ SQL;
     {
         $condition = Additional::conditions($conditions);
 
-        Additional::log("CONDITION", $condition);
-        
         // define query       
         $query = <<<SQL
 SELECT * FROM users {$condition}

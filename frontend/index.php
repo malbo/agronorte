@@ -57,11 +57,11 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                 </div>
 
                 <div class="row">
-                    <div class="col-8">
+                    <!-- <div class="col-8">
                         <a href="forgot-password.html">Reestablecer contraseña</a>
-                    </div>
+                    </div> -->
 
-                    <div class="col-4">
+                    <div class="col-12">
                         <button type="submit" class="btn btn-success btn-block" onclick="login(); return false;">Login</button>
                     </div>
                 </div>

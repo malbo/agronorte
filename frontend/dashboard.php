@@ -18,21 +18,19 @@ require_once(realpath(dirname(__FILE__) . '/../tools/Autoload.php'));
 use Foodtech\core\Configuration;
 use Foodtech\tools\Additional;
 
+// sessions handler / permissions
+session_start();
+
 // needed data
 $params = [];
 
 // needed for top
 require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
+
+var_dump(var_export($_SESSION['session'], true));
 ?>
-<!-- Home -->
-
-<!-- end Home -->
-
-
-<!-- Scripts -->
-
-<!-- end Scripts -->
-
+<body>
+    <p class="mt-5"><a href="logout.php">Logout</a></p>
 <?php
 // needed for bottom
 require_once(realpath(dirname(__FILE__) . '/inc/Bottom.php'));

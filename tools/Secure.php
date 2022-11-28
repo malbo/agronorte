@@ -157,7 +157,6 @@ class Secure
             else 
             {
                 $return['success']  = true;
-                $return['message']  = $user;
                 $return['location'] = 'dashboard.php';
 
                 // session handler
