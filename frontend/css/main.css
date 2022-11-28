@@ -2,3 +2,11 @@ html, body{
     margin: 0;
     padding: 0;
 }
+.main-footer, .main-header{
+    background-color: #377c2b !important;
+    color: #fff !important;
+}
+.brand-link{
+    background-color: #fbdd26 !important;
+    color: #000 !important;
+}

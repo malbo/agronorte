@@ -50,25 +50,68 @@ class Menu
                     </div>
                 </div>';
 
-          $html.= '<nav class="mt-2">
+        $html.= '<nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <li class="nav-header">EXAMPLES</li>
-            
+                    <li class="nav-header">SECCIONES</li>';
+
+        // Dashboard
+        $html.= '<li class="nav-item">
+                    <a href="dashboard.php" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>';
+
+        // Reportes
+        $html.= '<li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-bar"></i>
+                        <p>Reportes <i class="fas fa-angle-left right"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon far fa-envelope"></i>
-                            <p>Mailbox <i class="fas fa-angle-left right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="pages/mailbox/mailbox.html" class="nav-link">
+                        <a href="reports.php" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Inbox</p>
-                            </a>
-                        </li>
-                        </ul>
+                            <p>Reporte 1</p>
+                        </a>
                     </li>
                     </ul>
+                </li>';
+
+        // Admin
+        $html.= '<li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users-cog"></i>
+                        <p>Administración <i class="fas fa-angle-left right"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">';
+
+        $html.= '<li class="nav-item">
+                    <a href="users.php" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Usuarios</p>
+                    </a>
+                </li>';
+
+        $html.= '<li class="nav-item">
+                    <a href="account.php" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Cuenta</p>
+                    </a>
+                </li>';
+
+        $html.= '</ul>
+                </li>';
+                
+        // Contacto
+        $html.= '<li class="nav-item">
+                    <a href="contact.php" class="nav-link">
+                        <i class="nav-icon far fa-envelope"></i>
+                        <p>Contacto</p>
+                    </a>
+                </li>';
+
+        $html.= '</ul>
                 </nav>
                 </div>
             </aside>';
@@ -84,8 +127,8 @@ class Menu
     {
         $html = null;
         $html.= '<footer class="main-footer">
-                    <strong>Copyright &copy; 2022-' . date('Y') . ' ' . Configuration::COMPANY . '.</strong>
-                    All rights reserved.
+                    Copyright &copy; 2022-' . date('Y') . ' <strong>' . Configuration::COMPANY . '.</strong>
+                    Todos los derechos reservados.
                     <div class="float-right d-none d-sm-inline-block">
                         <b>Version</b> 1.0.0
                     </div>
@@ -104,22 +147,22 @@ class Menu
         $html = null;
         $html.= '<nav class="main-header navbar navbar-expand navbar-dark">
                     <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                        </li>
                     </ul>
                 
                     <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout.php" role="button">
-                        <i class="fas fa-dot-circle"></i>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-widget="fullscreen" href="#" role="button" alt="Fullscreen" title="Fullscreen">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.php" role="button" alt="Logout" title="Logout">
+                                <i class="fas fa-power-off"></i>
+                            </a>
+                        </li>
                     </ul>
                 </nav>';
         

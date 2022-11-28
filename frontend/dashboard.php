@@ -29,9 +29,6 @@ $params = [];
 
 // needed for top
 require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
-
-Additional::log("USER", $user);
-
 ?>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
