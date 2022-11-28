@@ -358,37 +358,6 @@ SQL;
             return json_encode($return);
         }
         
-        // check if account has generated data
-        if ($status === Categorizations::status(true)['deleted'])
-        {
-            $user_to_delete     = User::load(['id' => $id]);
-            if(false === is_null($user_to_delete->advertiser_id))
-            {
-                $return['success']  = false;
-                $return['message']  = self::$errors['exist_data'];
-
-                return json_encode($return);   
-            } 
-            else
-            {
-                self::deleteUserFinal(['id' => $id]);
-                
-                $return['success'] = true;    
-                $return['message'] = self::$success['delete']; 
-                
-                return json_encode($return);
-            }
-        }
-        
-        // check for permited relation to
-        if (false === Data::relatedHierarchy(['id' => $id, 'related' => $related]))
-        {
-            $return['success']  = false;
-            $return['message']  = self::$errors['related'];
-            
-            return json_encode($return);            
-        }
-        
         // check if account exists
         if (false === self::exists($params))
         {

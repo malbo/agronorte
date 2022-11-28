@@ -37,11 +37,6 @@ class SqlDb
             $dbname     = getenv('DBDB');
             $username   = getenv('DBUSER');
             $password   = getenv('DBPASSWORD');
-
-            Additional::log("HOST", $host);
-            Additional::log("DBDB", $dbname);
-            Additional::log("DBUSER", $username);
-            Additional::log("DBPASSWORD", $password);
             
             // Set DSN
             $dsn    = 'mysql:host=' . $host . ';dbname=' . $dbname . ';charset=utf8';

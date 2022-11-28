@@ -63,36 +63,6 @@ class Secure
     );
 
     /**
-     * Check for active cookie
-     * Check if account has activity for the last COOKIE_TTL seconds
-     * 
-     * @return boolean
-     */
-    private static function cookie()
-    {
-        // check enviroment
-        // always return true in dev enviroment
-        if (Configuration::enviroment() === Configuration::MODE_DEV)
-        {
-            return true;
-        }
-        
-        // cookies settings, only for production enviroment
-        $cookie     = filter_input(INPUT_COOKIE, self::COOKIE, FILTER_NULL_ON_FAILURE);
-        $validation = false !== $cookie ? $cookie : false;
-        if(true === $validation) 
-        {
-            $value  = $cookie[self::COOKIE];
-            setcookie(self::COOKIE, $value, time() + self::TTL, "/");
-            return true;
-        } 
-        else 
-        {
-            return false;
-        }
-    }
-    
-    /**
      * Login
      * 
      * @param object $params
