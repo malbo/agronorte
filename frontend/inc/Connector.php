@@ -22,7 +22,9 @@ class Connector
     /**
      * Classes definitions
      */
-    const SECURE    = 'Secure';
+    const CATEGORIZATIONS   = 'Categorizations';
+    const SECURE            = 'Secure';
+    const USER              = 'User';
     
     /**
      * Get connection between JS and PHP
@@ -51,11 +53,12 @@ class Connector
                 //     break;
                 
                 // Domain
-                // case self::ADSET:
-                //     $return = call_user_func("\\Agronorte\\domain\\{$token['class']}::{$token['method']}", $token);
-                //     break;
+                case self::USER:
+                    $return = call_user_func("\\Agronorte\\domain\\{$token['class']}::{$token['method']}", $token);
+                    break;
                 
                 // Tools
+                case self::CATEGORIZATIONS:
                 case self::SECURE:
                     $return = call_user_func("\\Agronorte\\tools\\{$token['class']}::{$token['method']}", $token);
                     break;

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * dashboard.php Main Page.
+ * error.php Error Page.
  *
  * Copyright (C) 2022 Agronorte <alboresmariano@gmail.com>
  *
@@ -20,7 +20,6 @@ use Agronorte\domain\User;
 use Agronorte\frontend\inc\Menu;
 use Agronorte\tools\Additional;
 use Agronorte\tools\Secure;
-use Agronorte\tools\Utils;
 
 // sessions handler / permissions
 session_start();
@@ -41,7 +40,9 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 <div class="wrapper">
 
   <!-- Preloader -->
-  <?php echo Utils::preloader();?>
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__wobble" src="img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div>
 
   <!-- Navbar -->
   <?php echo Menu::navigation();?>
@@ -52,20 +53,25 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1 class="m-0">Dashboard v1</h1>
+            <h1>404 Error Page</h1>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        Contenido
+      <div class="error-page">
+        <h2 class="headline text-warning"> 404</h2>
+
+        <div class="error-content">
+          <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Página no accesible.</h3>
+          <p>No pudimos encontrar la página que estás buscando o no tienes los permisos necesarios. <br />Mientras tanto, puedes <a href="dashboard.php"> regresar al dashboard general</a>.</p>
+        </div>
       </div>
     </section>
   </div>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * account.php Account Page.
+ * user.php User Page.
  *
  * Copyright (C) 2022 Agronorte <alboresmariano@gmail.com>
  *
@@ -32,21 +32,41 @@ if (false === $validation['valid'])
 }
 
 // needed data
-$params         = [];
+$params = [
+    'id_user'   => !is_null(filter_input(INPUT_GET, 'id')) ? filter_input(INPUT_GET, 'id') : false,
+];
+
+// data for edition or creation
 $status         = Categorizations::status();
 $roles          = Categorizations::roles();
 $permissions    = Categorizations::permissions();
-$stat           = ucfirst($status[$user->status]);
-$role           = ucfirst($roles[$user->role]);
-$permission     = $user->role !== Categorizations::roles(true)['user'] ? false : true;
+if (false !== $params['id_user'])
+{
+    $user       = User::load(['id' => $params['id_user']]);
+    $profile    = $user->name . ' ' . $user->lastname;
+    $id         = $user->id;
+    $name       = $user->name;
+    $lastname   = $user->lastname;
+    $email      = $user->email;
+    $password   = $user->password;
+    $stat       = ucfirst($status[$user->status]);
+    $role       = ucfirst($roles[$user->role]);
+    $created    = $user->created;
+}
+else
+{
+    $user       = new User([]);
+    $profile    = 'Nuevo Usuario';
+    $id = $name = $lastname = $email = $password = $stat = $role = $created = null;
+}
 
 // needed for top
 require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 ?>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-<input type="hidden" id="id" value="<?php echo $user->id;?>" />
-<input type="hidden" id="oldemail" value="<?php echo $user->email;?>" />
-<input type="hidden" id="oldpassword" value="<?php echo $user->password;?>" />
+<input type="hidden" id="id" value="<?php echo $id;?>" />
+<input type="hidden" id="oldemail" value="<?php echo $email;?>" />
+<input type="hidden" id="oldpassword" value="<?php echo $password;?>" />
 <div class="wrapper">
 
   <!-- Preloader -->
@@ -62,13 +82,18 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-12">
-            <h1 class="m-0">Cuenta</h1>
-          </div>
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0"><?php echo $profile;?></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="users.php" class="btn btn-sm btn-success btn-block"><i class="fas fa-reply mr-2"></i> Volver a usuarios</a></li>
+                    </ol>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Main content -->
@@ -78,12 +103,12 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                 <div class="col-md-3">
                     <!-- Profile Image -->
                     <?php echo Utils::profile([
-                        'name'      => $user->name,
-                        'lastname'  => $user->lastname,
-                        'email'     => $user->email,
+                        'name'      => $name,
+                        'lastname'  => $lastname,
+                        'email'     => $email,
                         'status'    => $stat,
                         'role'      => $role,
-                        'created'   => $user->created
+                        'created'   => $created
                     ]);?>
                 </div>
                 <div class="col-md-9">
@@ -92,13 +117,13 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                             <div class="tab-content">
                                     <div class="card-body">
                                         <?php 
-                                            echo Utils::input('name', $user->name, 'Nombre', 'text', null);
-                                            echo Utils::input('lastname', $user->lastname, 'Apellido', 'text', null);
-                                            echo Utils::input('email', $user->email, 'E-mail', 'text', null, $permission);
-                                            echo Utils::input('password', $user->password, 'Password', 'password', null);
-                                            echo Utils::input('status', $user->status, 'Estado', 'select', $status, $permission, false);
-                                            echo Utils::input('role', $user->role, 'Role', 'select', $roles, $permission, false);
-                                            echo Utils::input('permissions', $user->permissions, 'Permisos', 'select', $permissions, $permission, false);
+                                            echo Utils::input('name', $name, 'Nombre', 'text');
+                                            echo Utils::input('lastname', $lastname, 'Apellido', 'text');
+                                            echo Utils::input('email', $email, 'E-mail', 'text');
+                                            echo Utils::input('password', $password, 'Password', 'password');
+                                            echo Utils::input('status', $user->status, 'Estado', 'select', $status);
+                                            echo Utils::input('role', $user->role, 'Role', 'select', $roles);
+                                            echo Utils::input('permissions', $user->permissions, 'Permisos', 'select', $permissions);
                                         ?>
                                     </div>
 
@@ -123,7 +148,6 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <script src="../plugins/toastr/toastr.min.js"></script>
 <script src="js/adminlte.js"></script>
-<script src="js/ready.js?cb=<?php echo uniqid();?>"></script>
 
 <?php
 // needed for bottom

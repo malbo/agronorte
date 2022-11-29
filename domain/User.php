@@ -101,14 +101,6 @@ class User
     public $role;
 
     /**
-     * User related to.
-     *
-     * @access public
-     * @var int
-     */
-    public $related;
-
-    /**
      * User permissions (readonly or read/write).
      *
      * @access public
@@ -140,7 +132,6 @@ class User
       $this->password       = isset($data['password'])      ? (string)  $data['password']       : null;
       $this->status         = isset($data['status'])        ? (int)     $data['status']         : null;
       $this->role           = isset($data['role'])          ? (int)     $data['role']           : null;
-      $this->related        = isset($data['related'])       ? (int)     $data['related']        : null;
       $this->permissions    = isset($data['permissions'])   ? (int)     $data['permissions']    : null;
       $this->created        = isset($data['created'])       ? (string)  $data['created']        : null;
     }
@@ -335,9 +326,6 @@ SQL;
         $password       = (string)  $params['password'];
         $status         = (int)     $params['status'];
         $role           = (int)     $params['role'];
-        $related        = true === self::admin($params['id']) || 'null' === $params['id'] ? NULL : (int) $params['related'];
-        $father         = true === is_null($params['father']) ? Configuration::ADMIN_USER_ID : (int) $params['father'];
-        $access         = true === empty($params['access']) || 'null' === $params['access'] ? NULL : (string) $params['access'];
         $permissions    = (int)     $params['permissions'];
 
         // server-side validations for empty fields
@@ -370,10 +358,10 @@ SQL;
         // define query for profile
         $query = <<<SQL
 INSERT INTO users 
-    (`id`, `name`, `lastname`, `email`, `password`, `status`, `role`, `related`, `father`, `permissions`, `access`) 
+    (`id`, `name`, `lastname`, `email`, `password`, `status`, `role`, `permissions`) 
     VALUES 
-    (:id, :name, :lastname, :email, :password, :status, :role, :related, :father, :permissions, :access)
-    ON DUPLICATE KEY UPDATE `name` = :name2, `lastname` = :lastname2, `email` = :email2, `password` = :password2, `status` = :status2, `role` = :role2, `related` = :related2, `permissions` = :permissions2, `access` = :access2
+    (:id, :name, :lastname, :email, :password, :status, :role, :permissions)
+    ON DUPLICATE KEY UPDATE `name` = :name2, `lastname` = :lastname2, `email` = :email2, `password` = :password2, `status` = :status2, `role` = :role2, `permissions` = :permissions2
 SQL;
         
         // pepare statement
@@ -396,13 +384,8 @@ SQL;
         $statement->bindParam(':status2',       $status, \PDO::PARAM_INT);
         $statement->bindParam(':role',          $role, \PDO::PARAM_INT);
         $statement->bindParam(':role2',         $role, \PDO::PARAM_INT);
-        $statement->bindParam(':related',       $related, \PDO::PARAM_INT);
-        $statement->bindParam(':related2',      $related, \PDO::PARAM_INT);
-        $statement->bindParam(':father',        $father, \PDO::PARAM_INT);
         $statement->bindParam(':permissions',   $permissions, \PDO::PARAM_INT);
         $statement->bindParam(':permissions2',  $permissions, \PDO::PARAM_INT);
-        $statement->bindParam(':access',        $access, \PDO::PARAM_STR);
-        $statement->bindParam(':access2',       $access, \PDO::PARAM_STR);
 
         // get results
         if($statement->execute())

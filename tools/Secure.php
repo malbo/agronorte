@@ -103,7 +103,7 @@ class Secure
         }
         
         // get and validate user
-        $user = User::load(['`email`' => $email, '`status`' => Categorizations::status(true)['active']]);
+        $user = User::load(['`email`' => $email, '`status`' => Categorizations::status(true)['activo']]);
 
         // check if user exists
         if (false === $user)
@@ -119,7 +119,7 @@ class Secure
         else 
         {
             // check if user is active
-            if (Categorizations::status(true)['active'] !== (int) $user->status)
+            if (Categorizations::status(true)['activo'] !== (int) $user->status)
             {
                 $return['success']  = false;
                 $return['message']  = self::$errors['general'];
@@ -142,15 +142,15 @@ class Secure
 
     /**
      * Security validations for permissions platform
-     * @param array $account Account data
+     * @param array $user User data
      * 
      * @return array
      */
-    public static function permissions($account)
+    public static function permissions($user)
     {
         // cookies and sessions
         // cookies disabled for now false === self::checkForActiveCookie() ||
-        if (is_null($account['user']['status']) || (int) $account['user']['status'] === Categorizations::status(true)['inactive']) 
+        if (is_null($user->status) || (int) $user->status === Categorizations::status(true)['inactivo']) 
         {
             session_unset();
             session_destroy();
@@ -162,11 +162,11 @@ class Secure
         }
         
         // role assigned validation
-        if (is_null($account['user']['role']) || true === empty($account['user']['role']))
+        if (is_null($user->role) || true === empty($user->role))
         {
             return [
                 'valid'  => false,
-                'url'    => 'error.php?e=403',
+                'url'    => 'error.php',
             ];
         }
         
@@ -177,97 +177,7 @@ class Secure
         parse_str($url);
         switch ($file)
         {
-            case 'balance':
-                if(true === in_array($account['user']['id'], Configuration::$blocked_users))
-                {
-                    $valid_access = false;
-                }
-                break;
-                
-//            case 'landings':
-//                if(false === Exceptions::landings($account['user']['id']))
-//                {
-//                    $valid_access = false;
-//                }
-//                break; 
-                
-            case 'campaign':
-                if(false === empty($id))
-                {
-                    // campaign data ($id came from parse_str function)
-                    $campaign   = Campaign::load(['`campaign_id`' => $id]);
-
-                    // get advertiser id
-                    $advertiser = User::load(['`advertiser_id`' => $campaign->advertiser_id])->id;
-
-                    // recursive users
-                    $params['id_user'] = $account['user']['role'] === Categorizations::roles(true)['admin'] ? $account['user']['id'] : $account['user']['father'];
-                    $users      = true === is_null($account['user']['access']) ? Data::recursive($params) : Additional::decode($account['user']['access']);
-                    $users_all  = array_flip(array_merge([$advertiser], $users));
-
-                    // compare if user is permitted
-                    if(false === isset($users_all[$advertiser]))
-                    {
-                        $valid_access = false;
-                    }
-                }
-                break;  
-  
-            case 'certifications':
-            case 'creatives_list':
-            case 'screenshots':
-                if($account['user']['father'] !== Categorizations::status(true)['active'])
-                {
-                    $valid_access = false;
-                }
-                break; 
-                
-            case 'additional':
-            case 'data':
-            case 'finance':
-            case 'profits':
-                if($account['user']['father'] !== Categorizations::status(true)['active'] || $account['user']['role'] !== Categorizations::roles(true)['superadmin'])
-                {
-                    $valid_access = false;
-                }
-                break;     
-  
-            case 'invoice':
-                if(false === empty($id))
-                {
-                    // payment data
-                    $payment    = Payment::load(['`id`' => $id]);
-
-                    // recursive users
-                    $params['id_user'] = $account['user']['role'] === Categorizations::roles(true)['admin'] ? $account['user']['id'] : $account['user']['father'];
-                    $users      = true === is_null($account['user']['access']) ? Data::recursive($params) : Additional::decode($account['user']['access']);
-                    $users_all  = array_flip(array_merge([$params['id_user']], $users));
-
-                    // compare if user is permitted
-                    if(false === isset($users_all[$payment->id_user]))
-                    {
-                        $valid_access = false;
-                    }
-                }
-                break;
-            
-            case 'user':
-                if(false === empty($id))
-                {
-                    // recursive users
-                    $params['id_user'] = $account['user']['role'] === Categorizations::roles(true)['admin'] ? $account['user']['id'] : $account['user']['father'];
-                    $users      = true === is_null($account['user']['access']) ? array_flip(Data::recursive($params)) : array_flip(Additional::decode($account['user']['access']));
-
-                    // compare if user is permitted
-                    if(false === isset($users[$id]))
-                    {
-                        $valid_access = false;
-                    }
-                }
-                break;
-
             default:
-                    $valid_access = true;
                 break;
         }
         
@@ -275,7 +185,7 @@ class Secure
         {
             return [
                 'valid'  => false,
-                'url'    => 'error.php?e=401',
+                'url'    => 'error.php',
             ];            
         }
 

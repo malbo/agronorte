@@ -34,8 +34,8 @@ class Categorizations
     {
         // define array       
         $return = [
-            0   => 'Read Only privileges',
-            1   => 'Read/Write privileges',
+            0   => 'Sólo lectura',
+            1   => 'Lectura/Escritura',
         ];
         
         return true === $flip ? array_flip($return) : $return;
@@ -69,10 +69,8 @@ class Categorizations
     {
         // define array       
         $return = [
-            0   => 'inactive',
-            1   => 'active',
-            2   => 'pending',
-            3   => 'deleted'
+            0   => 'inactivo',
+            1   => 'activo'
         ];
         
         return true === $flip ? array_flip($return) : $return;
