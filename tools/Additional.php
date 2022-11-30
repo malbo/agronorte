@@ -45,7 +45,67 @@ class Additional
  
         return $condition;
     }
-    
+
+    /**
+     * Delete folder
+     * 
+     * @param string $dir Path to directory
+     * @return boolean
+     */
+    public static function deleteFolder($dir) 
+    {
+        if(false === is_array($dir) && is_dir($dir))
+        {
+            $files = array_diff(scandir($dir), array('.','..'));
+            foreach ($files as $file) 
+            {
+              (is_dir($dir . '/' . $file)) ? self::deleteFolder($dir . '/' . $file) : unlink($dir . '/' . $file);
+            }
+
+            return rmdir($dir);
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /**
+     * Check files data
+     * 
+     * @param string $path
+     * @return array
+     */
+    public static function filesData($path)
+    {
+        // prevent empty responses
+        if(false === is_dir($path))
+        {
+            return false;
+        }
+        
+        $files  = array_values(array_diff(scandir($path), ['..', '.']));
+        $return = [];
+        foreach ($files as  $file)
+        {
+            $new_file       = str_replace(['+', '%', '$', '?', '¿', '!', '&', '|', ' ', '\'', '/'], "", $file);
+            rename("{$path}/{$file}", "{$path}/{$new_file}");
+            $file_path      = "{$path}/{$new_file}";
+            $extension      = pathinfo($file_path)['extension'];           
+            $img_property   = getimagesize($file_path);
+            $img_size       = $img_property[0] . 'x' . $img_property[1];
+            
+            $return[] = [
+                'file_extension'    => $extension,
+                'file_size'         => $img_size,
+                'file_name'         => $new_file,
+                'file_path'         => $path . '/' . $new_file  
+            ];
+        }
+
+        return $return[max(array_keys($return))];
+    }
+
     /**
      * Generate log line
      * Suggested call: Additional::log("$msg (" . __FILE__ . "|" . __FUNCTION__ . "|" . __LINE__ . ")", $value);

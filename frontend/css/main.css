@@ -13,35 +13,3 @@ html, body{
 .readonly{
     background-color: #552f2f !important;
 }
-
-
-
-
-.profile-pic {
-    width: 150px;
-    max-height: auto;
-    display: inline-block;
-}
-.profile-user-img{
-    border: none !important;
-}
-.file-upload {
-    display: none;
-}
-.p-image {
-    position: absolute;
-    top: 140px;
-    right: 130px;
-    color: #b4b4b4;
-    transition: all .3s cubic-bezier(.175, .885, .32, 1);
-}
-.p-image:hover {
-  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
-}
-.upload-button {
-  font-size: 1.5em;
-}
-.upload-button:hover {
-  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
-  color: #999;
-}

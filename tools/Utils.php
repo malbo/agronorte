@@ -104,17 +104,15 @@ class Utils
      */
     public static function profile($user)
     {
+        $img  = true === file_exists('img/' . $user['id'] . '.jpg') ? '<img class="profile-user-img img-fluid img-circle" src="img/' . $user['id'] . '.jpg" alt="User profile picture">' : '';
         $html = null;
         $html.= '<div class="card card-outline">
                     <div class="card-body box-profile">';
 
-        $html.= '<div class="text-center">
-                    <img class="profile-user-img img-fluid img-circle profile-pic" src="img/user.jpg" alt="User profile picture">
-                    <div class="p-image">
-                        <i class="fa fa-camera upload-button"></i>
-                        <input class="file-upload" type="file" accept="image/*"/>
-                    </div>
-                </div>';
+        $html.= '<div class="text-center">';
+        $html.= $img;
+        $html.= '<p><div id="pic-upload"></div></p>';
+        $html.= '</div>';
 
         $html.= '<h3 class="profile-username text-center" id="resume-name">' . $user['name'] . ' ' . $user['lastname'] . '</h3>
                         <p class="text-muted text-center" id="resume-email">' . $user['email'] . '</p>

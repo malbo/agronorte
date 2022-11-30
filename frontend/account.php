@@ -78,6 +78,7 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                 <div class="col-md-3">
                     <!-- Profile Image -->
                     <?php echo Utils::profile([
+                        'id'        => $user->id,
                         'name'      => $user->name,
                         'lastname'  => $user->lastname,
                         'email'     => $user->email,
@@ -122,9 +123,34 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <script src="../plugins/toastr/toastr.min.js"></script>
+<script src="../plugins/file-upload/jquery.uploadfile.min.js?cb=<?php echo uniqid();?>"></script>
 <script src="js/adminlte.js"></script>
 <script src="js/ready.js?cb=<?php echo uniqid();?>"></script>
-
+<script>
+$(function () {
+    // Banner uploader
+    $("#pic-upload").uploadFile({
+        url:                    "upload.php",
+        method:                 "POST",
+        multiple:               false,
+        dragDrop:               false,
+        showFileCounter:        false,
+        fileName:               "file",
+        maxFileSize:            500 * 1024,
+        formData:{
+            "id":  "<?php echo $user->id;?>"
+        },
+        acceptFiles:            ".jpg, .JPG, .jpeg, .JPEG, .png, .PNG, .gif, .GIF",
+        showPreview:            false,
+        showCancel:             false,
+        showStatusAfterSuccess: false,
+        showProgress:           false,
+        onSelect:function(){
+            $("#pic-upload").text('Procesando, guardar perfil...');
+        }
+    });
+});
+</script>
 <?php
 // needed for bottom
 require_once(realpath(dirname(__FILE__) . '/inc/Bottom.php'));
