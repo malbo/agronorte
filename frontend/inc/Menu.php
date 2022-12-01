@@ -15,6 +15,7 @@ namespace Agronorte\frontend\inc;
 require_once(realpath(dirname(__FILE__) . '/../../tools/Autoload.php'));
 
 use Agronorte\core\Configuration;
+use Agronorte\doamin\User;
 use Agronorte\tools\Additional;
 use Agronorte\tools\Categorizations;
 
@@ -63,20 +64,20 @@ class Menu
                 </li>';
 
         // Reportes
-        $html.= '<li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-chart-bar"></i>
-                        <p>Reportes <i class="fas fa-angle-left right"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="reports.php" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Reporte 1</p>
-                        </a>
-                    </li>
-                    </ul>
-                </li>';
+        // $html.= '<li class="nav-item">
+        //             <a href="#" class="nav-link">
+        //                 <i class="nav-icon fas fa-chart-bar"></i>
+        //                 <p>Reportes <i class="fas fa-angle-left right"></i></p>
+        //             </a>
+        //             <ul class="nav nav-treeview">
+        //             <li class="nav-item">
+        //                 <a href="reports.php" class="nav-link">
+        //                     <i class="far fa-circle nav-icon"></i>
+        //                     <p>Reporte 1</p>
+        //                 </a>
+        //             </li>
+        //             </ul>
+        //         </li>';
 
         // Admin
         $html.= '<li class="nav-item">
@@ -86,19 +87,23 @@ class Menu
                     </a>
                     <ul class="nav nav-treeview">';
 
-        $html.= '<li class="nav-item">
-                    <a href="users.php" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Usuarios</p>
-                    </a>
-                </li>';
+        if($user->role !== Categorizations::roles(true)['user'])
+        {
+            $html.= '<li class="nav-item">
+                        <a href="users.php" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>';
+        }
 
-        $html.= '<li class="nav-item">
-                    <a href="reports.php" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Reports</p>
-                    </a>
-                </li>';
+
+        // $html.= '<li class="nav-item">
+        //             <a href="reports.php" class="nav-link">
+        //                 <i class="far fa-circle nav-icon"></i>
+        //                 <p>Reports</p>
+        //             </a>
+        //         </li>';
 
         $html.= '<li class="nav-item">
                     <a href="account.php" class="nav-link">
@@ -111,12 +116,12 @@ class Menu
                 </li>';
                 
         // Contacto
-        $html.= '<li class="nav-item">
-                    <a href="contact.php" class="nav-link">
-                        <i class="nav-icon far fa-envelope"></i>
-                        <p>Contacto</p>
-                    </a>
-                </li>';
+        // $html.= '<li class="nav-item">
+        //             <a href="contact.php" class="nav-link">
+        //                 <i class="nav-icon far fa-envelope"></i>
+        //                 <p>Contacto</p>
+        //             </a>
+        //         </li>';
 
         $html.= '</ul>
                 </nav>

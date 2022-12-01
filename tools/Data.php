@@ -68,9 +68,12 @@ class Data
         
         foreach ($users as $user)
         {
-            $id         = $user['id'];
-            $goto       = $id === $usr->id ? '<a href="account.php"><i class="fa fa-edit"></i></a>' : '<a href="user.php?id=' . $id . '"><i class="fa fa-edit"></i></a>';
-            $body[]     = [$id, $user['name'], $user['lastname'], $user['email'], ucfirst($roles[$user['role']]), ucfirst($status[$user['status']]), $user['created'], $goto];
+            if($usr->role >= $user['role'])
+            {
+                $id         = $user['id'];
+                $goto       = $id === $usr->id ? '<a href="account.php"><i class="fa fa-edit"></i></a>' : '<a href="user.php?id=' . $id . '"><i class="fa fa-edit"></i></a>';
+                $body[]     = [$id, $user['name'], $user['lastname'], $user['email'], ucfirst($roles[$user['role']]), ucfirst($status[$user['status']]), $user['created'], $goto];
+            }
         }
 
         $return['id']       = 'users';

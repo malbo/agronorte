@@ -101,14 +101,6 @@ class User
     public $role;
 
     /**
-     * User permissions (readonly or read/write).
-     *
-     * @access public
-     * @var int
-     */
-    public $permissions;
-
-    /**
      * User date created.
      *
      * @access public
@@ -132,7 +124,6 @@ class User
       $this->password       = isset($data['password'])      ? (string)  $data['password']       : null;
       $this->status         = isset($data['status'])        ? (int)     $data['status']         : null;
       $this->role           = isset($data['role'])          ? (int)     $data['role']           : null;
-      $this->permissions    = isset($data['permissions'])   ? (int)     $data['permissions']    : null;
       $this->created        = isset($data['created'])       ? (string)  $data['created']        : null;
     }
 
@@ -326,7 +317,6 @@ SQL;
         $password       = (string)  $params['password'];
         $status         = (int)     $params['status'];
         $role           = (int)     $params['role'];
-        $permissions    = (int)     $params['permissions'];
 
         // server-side validations for empty fields
         if (empty($name) || empty($lastname) || empty($email) || empty($password))
@@ -358,10 +348,10 @@ SQL;
         // define query for profile
         $query = <<<SQL
 INSERT INTO users 
-    (`id`, `name`, `lastname`, `email`, `password`, `status`, `role`, `permissions`) 
+    (`id`, `name`, `lastname`, `email`, `password`, `status`, `role`) 
     VALUES 
-    (:id, :name, :lastname, :email, :password, :status, :role, :permissions)
-    ON DUPLICATE KEY UPDATE `name` = :name2, `lastname` = :lastname2, `email` = :email2, `password` = :password2, `status` = :status2, `role` = :role2, `permissions` = :permissions2
+    (:id, :name, :lastname, :email, :password, :status, :role)
+    ON DUPLICATE KEY UPDATE `name` = :name2, `lastname` = :lastname2, `email` = :email2, `password` = :password2, `status` = :status2, `role` = :role2
 SQL;
         
         // pepare statement
@@ -384,8 +374,6 @@ SQL;
         $statement->bindParam(':status2',       $status, \PDO::PARAM_INT);
         $statement->bindParam(':role',          $role, \PDO::PARAM_INT);
         $statement->bindParam(':role2',         $role, \PDO::PARAM_INT);
-        $statement->bindParam(':permissions',   $permissions, \PDO::PARAM_INT);
-        $statement->bindParam(':permissions2',  $permissions, \PDO::PARAM_INT);
 
         // update pic
         if (is_dir('/tmp/' . $id))

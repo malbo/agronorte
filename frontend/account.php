@@ -35,7 +35,6 @@ if (false === $validation['valid'])
 $params         = [];
 $status         = Categorizations::status();
 $roles          = Categorizations::roles();
-$permissions    = Categorizations::permissions();
 $stat           = ucfirst($status[$user->status]);
 $role           = ucfirst($roles[$user->role]);
 $permission     = $user->role !== Categorizations::roles(true)['user'] ? false : true;
@@ -98,8 +97,7 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                                             echo Utils::input('email', $user->email, 'E-mail', 'text', null, $permission);
                                             echo Utils::input('password', $user->password, 'Password', 'password', null);
                                             echo Utils::input('status', $user->status, 'Estado', 'select', $status, $permission, false);
-                                            echo Utils::input('role', $user->role, 'Role', 'select', $roles, $permission, false);
-                                            echo Utils::input('permissions', $user->permissions, 'Permisos', 'select', $permissions, $permission, false);
+                                            echo Utils::input('role', $user->role, 'Rol', 'select', $roles, $permission, false);
                                         ?>
                                     </div>
 

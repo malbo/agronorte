@@ -13,3 +13,8 @@ html, body{
 .readonly{
     background-color: #552f2f !important;
 }
+.reports-fields{
+    border-top: 3px solid rgb(129, 129, 129);
+    margin-top: 50px !important;
+    padding-top: 20px !important;
+}

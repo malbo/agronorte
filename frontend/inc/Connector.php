@@ -23,6 +23,7 @@ class Connector
      * Classes definitions
      */
     const CATEGORIZATIONS   = 'Categorizations';
+    const REPORT            = 'Report';
     const SECURE            = 'Secure';
     const USER              = 'User';
     
@@ -53,6 +54,7 @@ class Connector
                 //     break;
                 
                 // Domain
+                case self::REPORT:
                 case self::USER:
                     $return = call_user_func("\\Agronorte\\domain\\{$token['class']}::{$token['method']}", $token);
                     break;

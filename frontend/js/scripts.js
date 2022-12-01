@@ -38,6 +38,38 @@ else
 
         return false;
     }
+
+    /**
+     * Delete report from profile
+     * 
+     * @return boolean
+     */
+    function deleteReport() 
+    {
+        // get data
+        var id_rep  = $('#id-report').val();
+
+        // create params
+        var params = {
+            class:      'Report',
+            method:     'delete',
+            id:         id_rep
+        };
+
+        $.post(connector, {'params':params}, function(e){
+            var data = jQuery.parseJSON(e);
+            if(true === data.success)
+            {
+                $('#report').val('');
+                $('#report-id').val('')
+                notification('success', data.message);   
+            }
+            else
+            {
+                notification('error', data.message);   
+            }
+        }); 
+    }
     
     /**
      * Process login form
@@ -130,8 +162,10 @@ else
      */
     function storeUser()
     {
-        var id = $('#id').val();
-        var id = empty($('#id').val()) ? null : $('#id').val();
+        var id          = empty($('#id').val()) ? null : $('#id').val();
+        var id_rep      = empty($('#id-report').val()) ? null : $('#id-report').val();
+        var report      = $('#report').val();
+        var report_id   = $('#report-id').val();
         
         // validations
         if (true === empty($('#name').val()) || true === empty($('#lastname').val()) || true === empty($('#email').val()) || true === empty($('#password').val()))
@@ -152,8 +186,7 @@ else
             oldpassword:    $('#oldpassword').val(),
             password:       $('#password').val(),
             status:         $('#status').val(),
-            role:           $('#role').val(),
-            permissions:    $('#permissions').val()
+            role:           $('#role').val()
         };
 
         $.post(connector, {'params':params}, function(e){
@@ -166,9 +199,25 @@ else
                 $('#resume-status').text(newstatus);
                 var newrole     = parseInt(params.role) === 1 ? 'Admin' : parseInt(params.role) === 2 ? 'User' : 'Superadmin';;
                 $('#resume-role').text(newrole);
-                
+                $('#resume-role').text(newrole);
+
+                // store associated report
+                var params_rep = {
+                    class:      'Report',
+                    method:     'store',
+                    id:         id_rep,
+                    id_user:    data.id,
+                    name:       report,
+                    report:     report_id
+                };
+
+                $.post(connector, {'params':params_rep}, function(e){
+                    var data = jQuery.parseJSON(e);
+                    $('#id-report').val(data.id);
+                });
+
                 notification('success', data.message);
-                window.location.reload();
+                // window.location.reload();
             }
             else
             {

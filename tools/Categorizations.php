@@ -51,8 +51,8 @@ class Categorizations
     {
         // define array       
         $return = [
-            1   => 'admin',
-            2   => 'user',
+            1   => 'user',
+            2   => 'admin',
             3   => 'superadmin',
         ];
         

@@ -16,6 +16,7 @@ require_once(realpath(dirname(__FILE__) . '/../tools/Autoload.php'));
 
 use Agronorte\core\Configuration;
 use Agronorte\domain\User;
+use Agronorte\domain\Report;
 use Agronorte\frontend\inc\Menu;
 use Agronorte\tools\Additional;
 use Agronorte\tools\Categorizations;
@@ -39,25 +40,35 @@ $params = [
 // data for edition or creation
 $status         = Categorizations::status();
 $roles          = Categorizations::roles();
-$permissions    = Categorizations::permissions();
 if (false !== $params['id_user'])
 {
-    $user       = User::load(['id' => $params['id_user']]);
-    $profile    = $user->name . ' ' . $user->lastname;
-    $id         = $user->id;
-    $name       = $user->name;
-    $lastname   = $user->lastname;
-    $email      = $user->email;
-    $password   = $user->password;
-    $stat       = ucfirst($status[$user->status]);
-    $role       = ucfirst($roles[$user->role]);
+    $usr        = User::load(['id' => $params['id_user']]);
+    $profile    = $usr->name . ' ' . $usr->lastname;
+    $id         = $usr->id;
+    $name       = $usr->name;
+    $lastname   = $usr->lastname;
+    $email      = $usr->email;
+    $password   = $usr->password;
+    $stat       = ucfirst($status[$usr->status]);
+    $role       = ucfirst($roles[$usr->role]);
     $created    = $user->created;
 }
 else
 {
-    $user       = new User([]);
+    $usr        = new User([]);
     $profile    = 'Nuevo Usuario';
     $id = $name = $lastname = $email = $password = $stat = $role = $created = null;
+}
+$report     = Report::load(['id_user' => $params['id_user']]);
+if(false !== $report)
+{
+    $id_rep     = $report->id;
+    $rep_name   = $report->name;
+    $rep_id     = $report->report;
+}
+else
+{
+    $rep_name = $rep_id = $id_rep = null;
 }
 
 // needed for top
@@ -67,6 +78,7 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 <input type="hidden" id="id" value="<?php echo $id;?>" />
 <input type="hidden" id="oldemail" value="<?php echo $email;?>" />
 <input type="hidden" id="oldpassword" value="<?php echo $password;?>" />
+<input type="hidden" id="id-report" value="<?php echo $id_rep;?>" />
 <div class="wrapper">
 
   <!-- Preloader -->
@@ -122,10 +134,34 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                                             echo Utils::input('lastname', $lastname, 'Apellido', 'text');
                                             echo Utils::input('email', $email, 'E-mail', 'text');
                                             echo Utils::input('password', $password, 'Password', 'password');
-                                            echo Utils::input('status', $user->status, 'Estado', 'select', $status);
-                                            echo Utils::input('role', $user->role, 'Role', 'select', $roles);
-                                            echo Utils::input('permissions', $user->permissions, 'Permisos', 'select', $permissions);
+                                            echo Utils::input('status', $usr->status, 'Estado', 'select', $status);
+                                            echo Utils::input('role', $usr->role, 'Rol', 'select', $roles);
                                         ?>
+
+                                        <?php if($user->role === Categorizations::roles(true)['superadmin']){ ?>
+                                            <div class="row reports-fields">
+                                                <div class="col-md-3">
+                                                    <?php echo Utils::input('report', $rep_name, 'Nombre Tablero', 'text');?>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <?php echo Utils::input('report-id', $rep_id, 'ID Tablero', 'text');?>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div class="form-group">
+                                                        <label for="empty">&nbsp;</label>
+                                                        <button class="btn btn-danger btn-block" onclick="deleteReport(); return false;">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php 
+                                            } else {
+                                                echo Utils::input('report', $rep_name, '', 'hidden');
+                                                echo Utils::input('report-id', $rep_id, '', 'hidden');
+                                            }   
+                                        ?>
+
                                     </div>
 
                                     <div class="card-footer">
