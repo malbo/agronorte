@@ -168,6 +168,7 @@ else
                 $('#resume-role').text(newrole);
                 
                 notification('success', data.message);
+                window.location.reload();
             }
             else
             {

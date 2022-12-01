@@ -19,6 +19,7 @@ use Agronorte\core\Configuration;
 use Agronorte\domain\User;
 use Agronorte\frontend\inc\Menu;
 use Agronorte\tools\Additional;
+use Agronorte\tools\Data;
 use Agronorte\tools\Secure;
 use Agronorte\tools\Utils;
 
@@ -33,6 +34,7 @@ if (false === $validation['valid'])
 
 // needed data
 $params = [];
+$report = Data::report($user);
 
 // needed for top
 require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
@@ -56,7 +58,7 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1 class="m-0">Dashboard v1</h1>
+            <h1 class="m-0"><?php echo $report['name'];?></h1>
           </div>
         </div>
       </div>
@@ -64,9 +66,9 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        Contenido
-      </div>
+          <div class="container-fluid text-center">
+          <?php echo $report['iframe'];?>
+          </div>
     </section>
   </div>
 

@@ -94,6 +94,13 @@ class Menu
                 </li>';
 
         $html.= '<li class="nav-item">
+                    <a href="reports.php" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Reports</p>
+                    </a>
+                </li>';
+
+        $html.= '<li class="nav-item">
                     <a href="account.php" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Cuenta</p>

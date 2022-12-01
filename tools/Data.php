@@ -15,12 +15,42 @@ namespace Agronorte\tools;
 require_once(realpath(dirname(__FILE__) . '/../tools/Autoload.php'));
 
 use Agronorte\core\Configuration;
+use Agronorte\domain\Report;
 use Agronorte\domain\User;
 use Agronorte\tools\Categorizations;
 use Agronorte\tools\Additional;
 
 class Data
 {
+    /**
+     * Load report
+     * 
+     * @param object $usr User that require report
+     * @return object/array
+     */
+    public static function report($usr)
+    {
+        $report = Report::load(['id_user' => $usr->id]);
+        if(false === empty($report))
+        {
+            $return = [
+                'name'      => $report->name,
+                'report'    => $report->report,
+                'iframe'    => '<iframe title="' . $report->name . '" src="https://app.powerbi.com/view?r=' . $report->report . '" width="85%" height="900" frameborder="0" allowfullscreen="allowfullscreen" style="border:3px solid #377c2c;"></iframe>'
+            ]; 
+        }
+        else
+        {
+            $return = [
+                'name'      => 'Dashboard v1',
+                'report'    => null,
+                'iframe'    => 'No hay reportes cargados aún.'
+            ];  
+        }
+
+        return $return;
+    } 
+
     /**
      * Load users
      * 

@@ -388,18 +388,19 @@ SQL;
         $statement->bindParam(':permissions2',  $permissions, \PDO::PARAM_INT);
 
         // update pic
-        // remove tmp folder
         if (is_dir('/tmp/' . $id))
         {
             $files = Additional::filesData('/tmp/' . $id);
 
             Additional::log("FILES", $files);
-            Additional::log("IS_FILE", is_file($files['file_path']));
-            Additional::log("IS_FILE2", is_file(realpath(dirname(__FILE__) . '/../frontend/img/2.jpg')));
-            Additional::log("PATH", realpath(dirname(__FILE__) . '/../frontend/img'));
+            Additional::log("PATH1", $files['file_path']);
+            Additional::log("PATH2", getcwd() . '/../');
+            Additional::log("PATH3", realpath((__DIR__)));
+            
+            $upload     = rename($files['file_path'], realpath(dirname(__FILE__) . '/frontend/img/' . $id . '.jpg'));
+            Additional::log("UPLOAD", $upload);
 
-            move_uploaded_file($files['file_path'], realpath(dirname(__FILE__) . '/../frontend/img/' . $id . '.jpg'));
-            rename($files['file_path'], realpath(dirname(__FILE__) . '/../frontend/img/' . $id . '.jpg'));
+            // remove tmp folder
             Additional::deleteFolder('/tmp/' . $id);
         }
 

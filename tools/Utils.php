@@ -104,13 +104,13 @@ class Utils
      */
     public static function profile($user)
     {
-        $img  = true === file_exists('img/' . $user['id'] . '.jpg') ? '<img class="profile-user-img img-fluid img-circle" src="img/' . $user['id'] . '.jpg" alt="User profile picture">' : '';
+        $img  = true === file_exists('img/' . $user['id'] . '.jpg') ? $user['id'] : 'user';
         $html = null;
         $html.= '<div class="card card-outline">
                     <div class="card-body box-profile">';
 
         $html.= '<div class="text-center">';
-        $html.= $img;
+        $html.= '<img class="profile-user-img img-fluid img-circle" src="img/' . $img . '.jpg" alt="User profile picture">';
         $html.= '<p><div id="pic-upload"></div></p>';
         $html.= '</div>';
 

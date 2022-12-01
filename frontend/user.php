@@ -103,6 +103,7 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                 <div class="col-md-3">
                     <!-- Profile Image -->
                     <?php echo Utils::profile([
+                        'id'        => $id,
                         'name'      => $name,
                         'lastname'  => $lastname,
                         'email'     => $email,
