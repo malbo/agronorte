@@ -147,6 +147,7 @@ $(function () {
             var reader = new FileReader();
             reader.onload = function (e) {
                 $('.profile-pic').attr('src', e.target.result);
+                $('.profile-pic-small').attr('src', e.target.result);
             }
             reader.readAsDataURL(files[0]);
         }
