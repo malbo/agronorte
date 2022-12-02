@@ -20,6 +20,7 @@ use Agronorte\domain\Report;
 use Agronorte\frontend\inc\Menu;
 use Agronorte\tools\Additional;
 use Agronorte\tools\Categorizations;
+use Agronorte\tools\Data;
 use Agronorte\tools\Secure;
 use Agronorte\tools\Utils;
 
@@ -39,7 +40,7 @@ $params = [
 
 // data for edition or creation
 $status         = Categorizations::status();
-$roles          = Categorizations::roles();
+$roles          = Data::roles($user);
 if (false !== $params['id_user'])
 {
     $usr        = User::load(['id' => $params['id_user']]);
@@ -184,6 +185,7 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <script src="../plugins/toastr/toastr.min.js"></script>
+<script src="../plugins/sweetalert/lib/sweet-alert.min.js"></script>
 <script src="js/adminlte.js"></script>
 
 <?php

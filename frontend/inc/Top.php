@@ -37,6 +37,7 @@ Configuration::secure();
     <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="../plugins/file-upload/uploadfile.css?cb=<?php echo uniqid();?>" />
+    <link rel="stylesheet" href="../plugins/sweetalert/lib/sweet-alert.css" />
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

@@ -24,16 +24,16 @@ class Report
      * Error messages
      */
     public static $errors = array(
-        'captcha'       => 'reCaptcha validation is required.',
         'empty'         => 'Complete all fields.',
-        'error'         => 'There was a problem saving user.'
+        'error'         => 'Hubo un problema guaradndo el reporte.'
     );
     
     /**
      * Success messages
      */
     public static $success = array(
-        'store'         => 'User has been stored successfuly.',
+        'store'         => 'El reporte ha sido guardado.',
+        'delete'        => 'El reporte ha sido borrado.',
     );
     
     /**
@@ -117,7 +117,7 @@ SQL;
         if($statement->execute())
         {
             $return['success'] = true;    
-            $return['message'] = self::$success['store'];  
+            $return['message'] = self::$success['delete'];  
         } 
         else
         {

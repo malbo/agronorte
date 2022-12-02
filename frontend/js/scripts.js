@@ -56,18 +56,29 @@ else
             id:         id_rep
         };
 
-        $.post(connector, {'params':params}, function(e){
-            var data = jQuery.parseJSON(e);
-            if(true === data.success)
-            {
-                $('#report').val('');
-                $('#report-id').val('')
-                notification('success', data.message);   
-            }
-            else
-            {
-                notification('error', data.message);   
-            }
+        swal({
+            title: "¿Está seguro que quiere eliminar el reporte?",
+            text: "El tablero se elomirá de forma permanente",
+            type: "warning",
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí, borrar"
+        },
+        function () {
+            $.post(connector, {'params':params}, function(e){
+                var data = jQuery.parseJSON(e);
+                if(true === data.success)
+                {
+                    $('#report').val('');
+                    $('#report-id').val('')
+                    notification('success', data.message);   
+                }
+                else
+                {
+                    notification('error', data.message);   
+                }
+            }); 
         }); 
     }
     
@@ -173,6 +184,21 @@ else
         {
             notification('error', 'Complete todos los campos.');           
             return false;
+        }
+
+        if (false === empty(report) || false === empty(report_id))
+        {
+            if (true === empty(report))
+            {
+                notification('error', 'Ingrese un nombre para el reporte.');           
+                return false;
+            }
+
+            if (true === empty(report_id))
+            {
+                notification('error', 'Ingrese un id para el reporte.');           
+                return false;
+            }
         }
         
         // create params

@@ -19,6 +19,7 @@ use Agronorte\domain\User;
 use Agronorte\frontend\inc\Menu;
 use Agronorte\tools\Additional;
 use Agronorte\tools\Categorizations;
+use Agronorte\tools\Data;
 use Agronorte\tools\Secure;
 use Agronorte\tools\Utils;
 
@@ -34,7 +35,7 @@ if (false === $validation['valid'])
 // needed data
 $params         = [];
 $status         = Categorizations::status();
-$roles          = Categorizations::roles();
+$roles          = Data::roles($user);
 $stat           = ucfirst($status[$user->status]);
 $role           = ucfirst($roles[$user->role]);
 $permission     = $user->role !== Categorizations::roles(true)['user'] ? false : true;

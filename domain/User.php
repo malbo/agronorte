@@ -26,22 +26,20 @@ class User
      * Error messages
      */
     public static $errors = array(
-        'captcha'       => 'reCaptcha validation is required.',
-        'empty'         => 'Complete all fields.',
-        'error'         => 'There was a problem saving user.',
-        'exist'         => 'E-mail or password are incorrect. Type another one.',
-        'invalid'       => 'Type a valid e-mail.',
-        'password'      => 'There was a problem updating password.',
-        'related'       => 'You can not relate to this account.'
+        'captcha'       => 'Validar reCaptcha.',
+        'empty'         => 'Complete todos los campos.',
+        'error'         => 'Hubo un problema guardando el usuario.',
+        'exist'         => 'E-mail o password son incorrectos. Intente con otro.',
+        'invalid'       => 'Ingrese un e-mail válido.',
+        'password'      => 'Hubo un problema guardando la contraseña.'
     );
     
     /**
      * Success messages
      */
     public static $success = array(
-        'delete'        => 'User has been deleted.',
-        'password'      => 'Password has been stored.',
-        'store'         => 'User has been stored successfuly.',
+        'delete'        => 'Usuario ha sido eliminado.',
+        'store'         => 'El usuario ha sido guardado correctamente.',
     );
     
     /**
@@ -125,17 +123,6 @@ class User
       $this->status         = isset($data['status'])        ? (int)     $data['status']         : null;
       $this->role           = isset($data['role'])          ? (int)     $data['role']           : null;
       $this->created        = isset($data['created'])       ? (string)  $data['created']        : null;
-    }
-
-    /**
-     * Check if it is admin user
-     * 
-     * @param int $id
-     * @return boolean
-     */
-    public static function admin($id)
-    {
-        return Configuration::ADMIN_USER_ID === (int) $id ? true : false;
     }
 
     /**
@@ -265,41 +252,6 @@ SQL;
         $hash = crypt($new_password, $salt);
         
         return $new_password === $old_password ? $old_password : $hash;
-    }
-    
-    /**
-     * Reset user password
-     * 
-     * @param array $params
-     * @return boolean
-     */
-    public static function reset($params)
-    {
-        // define query       
-        $query = <<<SQL
-UPDATE users SET password = :password WHERE `email` = :email AND `token` = :token
-SQL;
-        // pepare statement
-        $statement = SqlDb::getPdo()->prepare($query);
-
-        // bind params
-        $statement->bindParam(':email',     $params['email'], \PDO::PARAM_STR);
-        $statement->bindParam(':token',     $params['token'], \PDO::PARAM_STR);
-        $statement->bindParam(':password',  self::password($params['password'], ''), \PDO::PARAM_STR);
-
-        // execute
-        if (true === $statement->execute())
-        {
-            $return['success'] = true; 
-            $return['message'] = self::$success['password'];
-        }
-        else
-        {
-            $return['success'] = false; 
-            $return['message'] = self::$errors['password'];
-        }
-
-        return json_encode($return);
     }
 
     /**

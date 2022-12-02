@@ -52,6 +52,27 @@ class Data
     } 
 
     /**
+     * Manage roles
+     * 
+     * @param object $usr User that require report
+     * @return object/array
+     */
+    public static function roles($usr)
+    {
+        $roles  = Categorizations::roles();
+        $return = [];
+        foreach($roles as $key => $value)
+        {
+            if($usr->role >= $key)
+            {
+                $return[$key] = $value;
+            }
+        }
+
+        return $return;
+    } 
+
+    /**
      * Load users
      * 
      * @param object $usr User that require report
