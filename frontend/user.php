@@ -165,7 +165,7 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                                     </div>
 
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-success" onclick="storeUser(); return false;">Guardar</button>
+                                        <button type="submit" class="btn btn-success" onclick="storeUser('USER'); return false;">Guardar</button>
                                     </div>
                             </div>
                         </div>

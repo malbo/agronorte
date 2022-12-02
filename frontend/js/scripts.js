@@ -158,9 +158,10 @@ else
     /**
      * Store user
      *  
+     * @param string type 
      * @return string
      */
-    function storeUser()
+    function storeUser(type)
     {
         var id          = empty($('#id').val()) ? null : $('#id').val();
         var id_rep      = empty($('#id-report').val()) ? null : $('#id-report').val();
@@ -201,23 +202,25 @@ else
                 $('#resume-role').text(newrole);
                 $('#resume-role').text(newrole);
 
-                // store associated report
-                var params_rep = {
-                    class:      'Report',
-                    method:     'store',
-                    id:         id_rep,
-                    id_user:    data.id,
-                    name:       report,
-                    report:     report_id
-                };
-
-                $.post(connector, {'params':params_rep}, function(e){
-                    var data = jQuery.parseJSON(e);
-                    $('#id-report').val(data.id);
-                });
-
                 notification('success', data.message);
-                // window.location.reload();
+
+                // store associated report
+                if(type === 'USER')
+                {
+                    var params_rep = {
+                        class:      'Report',
+                        method:     'store',
+                        id:         id_rep,
+                        id_user:    data.id,
+                        name:       report,
+                        report:     report_id
+                    };
+    
+                    $.post(connector, {'params':params_rep}, function(e){
+                        var data = jQuery.parseJSON(e);
+                        $('#id-report').val(data.id);
+                    });
+                }
             }
             else
             {

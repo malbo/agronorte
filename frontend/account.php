@@ -102,7 +102,7 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                                     </div>
 
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-success" onclick="storeUser(); return false;">Guardar</button>
+                                        <button type="submit" class="btn btn-success" onclick="storeUser('ACCOUNT'); return false;">Guardar</button>
                                     </div>
                             </div>
                         </div>
@@ -143,8 +143,12 @@ $(function () {
         showCancel:             false,
         showStatusAfterSuccess: false,
         showProgress:           false,
-        onSelect:function(){
-            $("#pic-upload").text('Procesando, guardar perfil...');
+        onSelect:function(files){
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.profile-pic').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(files[0]);
         }
     });
 });

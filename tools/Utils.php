@@ -110,7 +110,11 @@ class Utils
                     <div class="card-body box-profile">';
 
         $html.= '<div class="text-center">';
-        $html.= '<img class="profile-user-img img-fluid img-circle" src="img/' . $img . '.jpg" alt="User profile picture">';
+
+        $html.= '<div class="circle">';
+        $html.= '<img class="profile-pic" src="img/' . $img . '.jpg">';
+        $html.= '</div>';
+
         $html.= '<p><div id="pic-upload"></div></p>';
         $html.= '</div>';
 

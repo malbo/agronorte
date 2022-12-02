@@ -378,15 +378,8 @@ SQL;
         // update pic
         if (is_dir('/tmp/' . $id))
         {
-            $files = Additional::filesData('/tmp/' . $id);
-
-            Additional::log("FILES", $files);
-            Additional::log("PATH1", $files['file_path']);
-            Additional::log("PATH2", getcwd() . '/../');
-            Additional::log("PATH3", realpath((__DIR__)));
-            
-            $upload     = rename($files['file_path'], realpath(dirname(__FILE__) . '/frontend/img/' . $id . '.jpg'));
-            Additional::log("UPLOAD", $upload);
+            $files  = Additional::filesData('/tmp/' . $id);
+            $upload = rename($files['file_path'], dirname(__FILE__) . '/../frontend/img/' . $id . '.jpg');
 
             // remove tmp folder
             Additional::deleteFolder('/tmp/' . $id);
