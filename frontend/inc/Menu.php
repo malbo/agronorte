@@ -32,7 +32,7 @@ class Menu
     {
         // prepare data
         $name = $user->name . ' ' . $user->lastname;
-        $img  = true === file_exists('img/' . $user->id . '.jpg') ? $user->id : 'user';
+        $img  = true === file_exists('files/' . $user->id . '.jpg') ? 'files/' . $user->id . '.jpg' : 'img/user.jpg';
 
         $html = null;
         $html.= '<aside class="main-sidebar sidebar-dark-primary elevation-4">';
@@ -45,7 +45,7 @@ class Menu
         $html.= '<div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="img/' . $img . '.jpg" class="img-circle elevation-2 profile-pic-small" alt="User Image">
+                        <img src="' . $img . '" class="img-circle elevation-2 profile-pic-small" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">' . $name . '</a>

@@ -331,7 +331,7 @@ SQL;
         if (is_dir('/tmp/' . $id))
         {
             $files  = Additional::filesData('/tmp/' . $id);
-            $upload = rename($files['file_path'], dirname(__FILE__) . '/../frontend/img/' . $id . '.jpg');
+            $upload = rename($files['file_path'], dirname(__FILE__) . '/../frontend/files/' . $id . '.jpg');
 
             // remove tmp folder
             Additional::deleteFolder('/tmp/' . $id);
