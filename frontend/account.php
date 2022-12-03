@@ -141,7 +141,7 @@ $(function () {
         },
         acceptFiles:            ".jpg, .JPG, .jpeg, .JPEG, .png, .PNG, .gif, .GIF",
         showPreview:            false,
-        showCancel:             false,
+        showCancel:             true,
         showStatusAfterSuccess: false,
         showProgress:           false,
         onSelect:function(files){
