@@ -71,10 +71,10 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
     </div>
 
 <!-- Vendor scripts -->
-<script src="../plugins/jquery/jquery.min.js"></script>
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/jquery/jquery.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/toastr/toastr.min.js"></script>
 <script src="js/adminlte.min.js"></script>
-<script src="../plugins/toastr/toastr.min.js"></script>
 <?php
 // needed for bottom
 require_once(realpath(dirname(__FILE__) . '/inc/Bottom.php'));

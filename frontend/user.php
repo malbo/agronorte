@@ -181,11 +181,11 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 </div>
 
 <!-- Scripts -->
-<script src="../plugins/jquery/jquery.min.js"></script>
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<script src="../plugins/toastr/toastr.min.js"></script>
-<script src="../plugins/sweetalert/lib/sweet-alert.min.js"></script>
+<script src="plugins/jquery/jquery.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="plugins/toastr/toastr.min.js"></script>
+<script src="plugins/sweetalert/lib/sweet-alert.min.js"></script>
 <script src="js/adminlte.js"></script>
 
 <?php

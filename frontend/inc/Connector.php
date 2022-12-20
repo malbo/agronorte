@@ -35,6 +35,8 @@ class Connector
      */
     public static function init($token)
     {
+        Additional::log("TOKEN", $token);
+
         if (false === $token || empty($token))
         {
             return false;
@@ -70,10 +72,11 @@ class Connector
             }
 
             // echoing JSON response from PHP to JS
+            Additional::log("RETURN", $return);
             echo $return ? : false;
         }
     }
 }
-
+Additional::log("POST", filter_input(INPUT_POST, 'params', FILTER_DEFAULT , FILTER_REQUIRE_ARRAY));
 $token = null !== filter_input(INPUT_POST, 'params', FILTER_DEFAULT , FILTER_REQUIRE_ARRAY) ? filter_input(INPUT_POST, 'params', FILTER_DEFAULT , FILTER_REQUIRE_ARRAY) : false;
 Connector::init($token);
