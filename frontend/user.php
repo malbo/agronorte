@@ -142,10 +142,10 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                                         <?php if($user->role === Categorizations::roles(true)['superadmin']){ ?>
                                             <div class="row reports-fields">
                                                 <div class="col-md-3">
-                                                    <?php echo Utils::input('report', $rep_name, 'Nombre Tablero', 'text');?>
+                                                    <?php echo Utils::input('report', $rep_name, 'Dataset ID', 'text');?>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <?php echo Utils::input('report-id', $rep_id, 'ID Tablero', 'text');?>
+                                                    <?php echo Utils::input('report-id', $rep_id, 'Report ID', 'text');?>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <div class="form-group">

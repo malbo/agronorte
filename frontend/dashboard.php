@@ -68,6 +68,7 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
     <section class="content">
           <div class="container-fluid text-center">
           <?php echo $report['iframe'];?>
+          <!-- <iframe title="Menu navegacion y ejemplos 2.3 HE" width="100%" height="600" src="https://app.powerbi.com/reportEmbed?reportId=d73aeac6-50fb-4885-bc17-b6a860542f1f&autoAuth=true&ctid=cf38fd76-cbf5-4129-a362-70bb00cff66a" frameborder="0" allowFullScreen="true"></iframe> -->
           </div>
     </section>
   </div>

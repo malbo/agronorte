@@ -165,7 +165,18 @@ else
         }
         
     }
-    
+
+    /**
+     * Resize iFrame
+     *  
+     * @return string
+     */
+    function resizeIframe(obj) 
+    {
+        console.log(obj);
+        obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+    }
+
     /**
      * Store user
      *  
