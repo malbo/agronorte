@@ -53,20 +53,20 @@ class Report
     public $id_user;
 
     /**
-     * Report name.
+     * Dataset ID.
      *
      * @access public
      * @var string
      */
-    public $name;
+    public $dataset_id;
 
     /**
-     * Report id.
+     * Report ID.
      *
      * @access public
      * @var string
      */
-    public $report;
+    public $report_id;
 
     /**
      * Report date created.
@@ -85,11 +85,11 @@ class Report
 
     public function __construct(array $data) 
     {
-      $this->id         = isset($data['id'])        ? (int)     $data['id']         : null;
-      $this->id_user    = isset($data['id_user'])   ? (int)     $data['id_user']    : null;
-      $this->name       = isset($data['name'])      ? (string)  $data['name']       : null;
-      $this->report     = isset($data['report'])    ? (string)  $data['report']     : null;
-      $this->date       = isset($data['date'])      ? (string)  $data['date']       : null;
+      $this->id         = isset($data['id'])            ? (int)     $data['id']         : null;
+      $this->id_user    = isset($data['id_user'])       ? (int)     $data['id_user']    : null;
+      $this->dataset_id = isset($data['dataset_id'])    ? (string)  $data['dataset_id'] : null;
+      $this->report_id  = isset($data['report_id'])     ? (string)  $data['report_id']  : null;
+      $this->date       = isset($data['date'])          ? (string)  $data['date']       : null;
     }
 
     /**
@@ -177,28 +177,28 @@ SQL;
     {
         $id         = true === isset($params['id']) && !empty($params['id']) ? (int) $params['id'] : null;
         $id_user    = (int)     $params['id_user'];
-        $name       = (string)  $params['name'];
-        $report     = (string)  $params['report'];
+        $dataset_id = (string)  $params['dataset_id'];
+        $report_id  = (string)  $params['report_id'];
 
         // define query for profile
         $query = <<<SQL
 INSERT INTO reports 
-    (`id`, `id_user`, `name`, `report`) 
+    (`id`, `id_user`, `dataset_id`, `report_id`) 
     VALUES 
-    (:id, :id_user, :name, :report)
-    ON DUPLICATE KEY UPDATE `name` = :name2, `report` = :report2
+    (:id, :id_user, :dataset_id, :report_id)
+    ON DUPLICATE KEY UPDATE `dataset_id` = :dataset_id2, `report_id` = :report_id2
 SQL;
         
         // pepare statement
         $statement = SqlDb::getPdo()->prepare($query);
         
         // bind params
-        $statement->bindParam(':id',        $id, \PDO::PARAM_INT);
-        $statement->bindParam(':id_user',   $id_user, \PDO::PARAM_INT);
-        $statement->bindParam(':name',      $name, \PDO::PARAM_STR);
-        $statement->bindParam(':name2',     $name, \PDO::PARAM_STR);
-        $statement->bindParam(':report',    $report, \PDO::PARAM_STR);
-        $statement->bindParam(':report2',   $report, \PDO::PARAM_STR);
+        $statement->bindParam(':id',            $id, \PDO::PARAM_INT);
+        $statement->bindParam(':id_user',       $id_user, \PDO::PARAM_INT);
+        $statement->bindParam(':dataset_id',    $dataset_id, \PDO::PARAM_STR);
+        $statement->bindParam(':dataset_id2',   $dataset_id, \PDO::PARAM_STR);
+        $statement->bindParam(':report_id',     $report_id, \PDO::PARAM_STR);
+        $statement->bindParam(':report_id2',    $report_id, \PDO::PARAM_STR);
 
         // execute
         if($statement->execute())

@@ -19,8 +19,8 @@ class Configuration
     /**
      * Configuration for templates
      */
-    const FANTASY                       = 'Agronorte';
-    const COMPANY                       = 'Agronorte';
+    const FANTASY                       = 'Agro Norte';
+    const COMPANY                       = 'Agro Norte';
     const ADDRESS1                      = '1441 Brickell Avenue #1018';
     const ADDRESS2                      = 'Miami, FL, 33131, United States';
     const PHONE                         = '+1 (786) 753-7839';

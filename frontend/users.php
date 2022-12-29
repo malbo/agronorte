@@ -39,7 +39,7 @@ $table  = Data::users($user);
 // needed for top
 require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 ?>
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
 
   <!-- Preloader -->

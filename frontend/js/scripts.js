@@ -187,7 +187,7 @@ else
     {
         var id          = empty($('#id').val()) ? null : $('#id').val();
         var id_rep      = empty($('#id-report').val()) ? null : $('#id-report').val();
-        var report      = $('#report').val();
+        var dataset_id  = $('#dataset-id').val();
         var report_id   = $('#report-id').val();
         
         // validations
@@ -197,9 +197,9 @@ else
             return false;
         }
 
-        if (false === empty(report) || false === empty(report_id))
+        if (false === empty(dataset_id) || false === empty(report_id))
         {
-            if (true === empty(report))
+            if (true === empty(dataset_id))
             {
                 notification('error', 'Ingrese un nombre para el reporte.');           
                 return false;
@@ -249,8 +249,8 @@ else
                         method:     'store',
                         id:         id_rep,
                         id_user:    data.id,
-                        name:       report,
-                        report:     report_id
+                        dataset_id: dataset_id,
+                        report_id:  report_id
                     };
     
                     $.post(connector, {'params':params_rep}, function(e){

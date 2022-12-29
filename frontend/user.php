@@ -64,8 +64,8 @@ $report     = Report::load(['id_user' => $params['id_user']]);
 if(false !== $report)
 {
     $id_rep     = $report->id;
-    $rep_name   = $report->name;
-    $rep_id     = $report->report;
+    $dataset_id = $report->dataset_id;
+    $report_id  = $report->report_id;
 }
 else
 {
@@ -75,7 +75,7 @@ else
 // needed for top
 require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 ?>
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <input type="hidden" id="id" value="<?php echo $id;?>" />
 <input type="hidden" id="oldemail" value="<?php echo $email;?>" />
 <input type="hidden" id="oldpassword" value="<?php echo $password;?>" />
@@ -142,10 +142,10 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                                         <?php if($user->role === Categorizations::roles(true)['superadmin']){ ?>
                                             <div class="row reports-fields">
                                                 <div class="col-md-3">
-                                                    <?php echo Utils::input('report', $rep_name, 'Dataset ID', 'text');?>
+                                                    <?php echo Utils::input('dataset-id', $dataset_id, 'Dataset ID', 'text');?>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <?php echo Utils::input('report-id', $rep_id, 'Report ID', 'text');?>
+                                                    <?php echo Utils::input('report-id', $report_id, 'Report ID', 'text');?>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <div class="form-group">
@@ -158,8 +158,8 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
                                             </div>
                                         <?php 
                                             } else {
-                                                echo Utils::input('report', $rep_name, '', 'hidden');
-                                                echo Utils::input('report-id', $rep_id, '', 'hidden');
+                                                echo Utils::input('dataset-id', $dataset_id, '', 'hidden');
+                                                echo Utils::input('report-id', $report_id, '', 'hidden');
                                             }   
                                         ?>
 

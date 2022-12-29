@@ -50,9 +50,11 @@ Configuration::secure();
     <link href="css/main.css?cb=<?php echo uniqid();?>" rel="stylesheet">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <!-- Scripts JS -->
-    <script src="js/scripts.js?cb=<?php echo uniqid();?>"></script>
+    <!-- Power BI Library -->
+    <script src="js/PowerBI-JavaScript-master/dist/powerbi.js"></script>
     <!-- recaptcha -->
     <script src="https://www.google.com/recaptcha/api.js"></script>
+    <!-- Scripts JS -->
+    <script src="js/scripts.js?cb=<?php echo uniqid();?>"></script>
 </head>
 <body>

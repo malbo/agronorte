@@ -40,24 +40,41 @@ class Data
      */
     public static function report($usr)
     {
-        // Get report data
+        /**
+         * Get report
+         */
         $report = Report::load(['id_user' => $usr->id]);
 
-        // Power BI Access Token (Microsoft Access)
-        // $body   = [
+        // Prevent to consume API for null|empty values
+        if(true === empty($report))
+        {
+            return [
+                'name'      => 'Dashboard v1',
+                'report'    => null,
+                'iframe'    => 'No hay reportes cargados aún.'
+            ];  
+        }
+
+        /**
+         * Power BI Access Token (Microsoft Access)
+         * For general pourposes
+         */
+        // $data   = [
         //     'tenant'        => self::AZURE_TENANT_ID, 
         //     'client_id'     => self::AZURE_CLIENT_ID, 
         //     'client_secret' => self::CLIENT_SECRET, 
         //     'scope'         => 'https://graph.microsoft.com/.default', 
         //     'grant_type'    => 'client_credentials'
         // ]; 
-        // $access = shell_exec("curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' -d '" . http_build_query($body) . "' 'https://login.microsoftonline.com/" . self::AZURE_TENANT_ID . "/oauth2/v2.0/token'");
-        // $token  = json_decode($access, true)['access_token'];
-        // Additional::log("TOKEN", json_decode($access, true)['access_token']);
+        // $response       = shell_exec("curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' -d '" . http_build_query($data) . "' 'https://login.microsoftonline.com/" . self::AZURE_TENANT_ID . "/oauth2/v2.0/token'");
+        // $access_token   = json_decode($response, true)['access_token'];
 
-        // Power BI Access Token
+        /**
+         * Power BI Access Token
+         * Specific for Power BI service
+         */
         Dotenv::load(realpath(dirname(__FILE__) . '/../.env'));
-        $body   = [
+        $data   = [
             'client_id'     => self::AZURE_CLIENT_ID, 
             'client_secret' => self::CLIENT_SECRET, 
             'username'      => getenv('PBIUSERNAME'),
@@ -65,60 +82,58 @@ class Data
             'resource'      => 'https://analysis.windows.net/powerbi/api', 
             'grant_type'    => 'password'
         ]; 
-        $access = shell_exec("curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' -d '" . http_build_query($body) . "' 'https://login.windows.net/common/oauth2/token'");
-        $token  = json_decode($access, true)['access_token'];
+        $response       = shell_exec("curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' -d '" . http_build_query($data) . "' 'https://login.microsoftonline.com/" . self::AZURE_TENANT_ID . "/oauth2/token'");
+        $access_token   = json_decode($response, true)['access_token'];
 
-        // Refresh Dataset 
-        $body   = [
-            'notifyOption' => ''
-        ];
-        $dtset  = shell_exec("curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Accept: application/json' --header 'Authorization: Bearer " . $token . "' -d '" . http_build_query($body) . "' 'https://api.powerbi.com/v1.0/myorg/datasets/" . $report->name . "/refreshes'");
-
-        Additional::log("REFRESH_DATASET", $dtset);    
-
-        // Get report
-        $query  = shell_exec("curl -X GET --header 'Content-Type: application/x-www-form-urlencoded' --header 'Accept: application/json' --header 'Authorization: Bearer " . $token . "' 'https://api.powerbi.com/v1.0/myorg/reports/" . $report->report . "'");
-        $resp   = json_decode($query, true);
-
-        Additional::log("REPORT", $resp);
+        /**
+         * Refresh Dataset
+         * https://learn.microsoft.com/en-us/rest/api/power-bi/datasets/refresh-dataset
+         */
+        // $body   = [
+        //     'notifyOption' => ''
+        // ];
+        // $dtset  = shell_exec("curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Accept: application/json' --header 'Authorization: Bearer " . $access_token . "' -d '" . http_build_query($body) . "' 'https://api.powerbi.com/v1.0/myorg/datasets/" . $report->name . "/refreshes'");
+            
+        /**
+         * Power BI Embed Token
+         * https://learn.microsoft.com/es-es/rest/api/power-bi/embed-token/generate-token
+         */
+        $data   = json_encode([
+            'datasets'          => [['id' => $report->dataset_id]],
+            'reports'           => [['id' => $report->report_id]],
+            'lifetimeInMinutes' => 60
+        ]); 
+        $response       = shell_exec("curl -X POST --header 'Content-Type: application/json; odata.metadata=minimal' --header 'Accept: application/json' --header 'Authorization: Bearer " . $access_token . "' -d '" . $data . "' 'https://api.powerbi.com/v1.0/myorg/GenerateToken'"); 
+        $embed_token    = json_decode($response, true)['token']; 
+        
+        /**
+         * Get report API method
+         * https://learn.microsoft.com/en-us/rest/api/power-bi/reports/get-report
+         */
+        $response       = shell_exec("curl -X GET --header 'Content-Type: application/x-www-form-urlencoded' --header 'Accept: application/json' --header 'Authorization: Bearer " . $access_token . "' 'https://api.powerbi.com/v1.0/myorg/reports/" . $report->report_id . "'");
+        $report_values  = json_decode($response, true);
         
         if(false === empty($report))
         {
-            $url    = 'https://app.powerbi.com/reportEmbed?reportId=' . $resp['id'] . '&autoAuth=true&ctid=' . self::AZURE_TENANT_ID;
+            $url    = $report_values['embedUrl'];
             $return = [
-                'name'      => $resp['name'],
-                'report'    => $report->report,
-                // 'iframe'    => '<iframe title="' . $resp['name'] . '" src="' . $url . '" width="100%" height="800" frameborder="0" allowfullscreen="allowfullscreen" onload="resizeIframe(this);" style="border:3px solid #377c2c;"></iframe>'
-                'iframe'    => '<div style="width:100%;height:calc(100vh - 200px);background-color:yellow"><iframe src="' . $url . '" style="width:100%; height:100%; padding:0; margin:0; border:1px solid #377c2c;"></iframe></div>'
+                'name'          => $report_values['name'],
+                'iframe'        => '<div style="width:100%; height:calc(100vh - 200px);" id="embedContainer" class="embedContainer"></div>',
+                'embedToken'    => $embed_token,
+                'embedUrl'      => $report_values['embedUrl'],
+                'reportId'      => $report->report_id
             ]; 
         }
         else
         {
             $return = [
                 'name'      => 'Dashboard v1',
-                'report'    => null,
                 'iframe'    => 'No hay reportes cargados aún.'
             ];  
         }
 
         return $return;
     } 
-
-    /**
-     * Create curl method function
-     *
-     * @access public
-     * @return boolean
-     */
-    public static function curlSender($method='POST', $url, $data)
-    {
-        $token      = self::TOKEN;
-        $header     = '-H "accept: application/json" -H "Authorization: Token token=' . $token . '" -H "Content-Type: application/json"';
-        $response   = shell_exec('curl -X ' . $method . ' "' . self::BASE_URL . $url . '" ' . $header . ' -d \'' . json_encode($data, JSON_HEX_QUOT) . '\'');
-        $return     = json_decode($response, true);
-        
-        return $return;
-    }
 
     /**
      * Manage roles

@@ -43,7 +43,7 @@ $permission     = $user->role !== Categorizations::roles(true)['user'] ? false :
 // needed for top
 require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
 ?>
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <input type="hidden" id="id" value="<?php echo $user->id;?>" />
 <input type="hidden" id="oldemail" value="<?php echo $user->email;?>" />
 <input type="hidden" id="oldpassword" value="<?php echo $user->password;?>" />

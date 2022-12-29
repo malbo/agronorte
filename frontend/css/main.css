@@ -1,24 +1,66 @@
+@font-face {
+    font-family: DIN;
+    src: url('../fonts/din-regular.ttf');
+}
 html, body{
     margin: 0;
     padding: 0;
+    font-family: DIN !important;
 }
-.main-footer, .main-header{
-    background-color: #377c2b !important;
-    color: #fff !important;
+.main-footer, .main-header, .main-footer a, .main-header a{
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+.main-header {
+    border-bottom: 1px solid #b7bbbd !important;
+}
+.main-footer {
+    font-size: 0.9em !important;
+    border-top: 1px solid #b7bbbd !important;
+}
+.sidebar{
+    padding: 0 !important;
 }
 .brand-link{
-    background-color: #fbdd26 !important;
-    color: #000 !important;
+    background-color: #02af4b !important;
+    color: #FFFFFF !important;
+}
+.user-panel{
+    background-color: #025bb9 !important;
+    color: #FFFFFF !important;
+    padding: 35px 5px 35px 5px !important;
+    margin-top: 0 !important;
+}
+.os-content, .os-content a, .os-content li{
+    background-color: #b7bbbd !important;
+    color: #000000 !important;
+}
+.os-content{
+    margin-top: 0 !important;
+}
+.os-content li{
+    border-bottom: 1px solid #858585 !important;
+}
+iframe{
+    border: 1px solid #b7bbbd !important;
 }
 .readonly{
     background-color: #552f2f !important;
+}
+.visualContainerHost{
+    box-shadow: none !important;
 }
 .reports-fields{
     border-top: 3px solid rgb(129, 129, 129);
     margin-top: 50px !important;
     padding-top: 20px !important;
 }
-
+.btn-success {
+    color: #fff;
+    background-color: #02af4b !important;
+    border-color: #02af4b !important;
+    box-shadow: none;
+}
 
 .profile-pic {
     width: 200px;

@@ -28,7 +28,7 @@ require_once(realpath(dirname(__FILE__) . '/inc/Top.php'));
     <div class="login-box">
     <div class="card card-outline card-success">
         <div class="card-header text-center">
-            <a href="#" class="h1">Agronorte</a>
+            <a href="#" class="h1"><?php echo Configuration::COMPANY;?></a>
         </div>
         <div class="card-body">
             <p class="login-box-msg">Ingrese sus datos de sesión</p>

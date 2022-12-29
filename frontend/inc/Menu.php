@@ -37,18 +37,19 @@ class Menu
         $html = null;
         $html.= '<aside class="main-sidebar sidebar-dark-primary elevation-4">';
 
-        $html.= '<a href="index3.html" class="brand-link">
+        $html.= '<a href="index.php" class="brand-link">
                     <img src="img/logo.png" alt="AgronorteLogo" class="brand-image img-circle elevation-3">
-                <span class="brand-text font-weight-light">' . Configuration::COMPANY . '</span>
+                    <span class="brand-text font-weight-light">' . Configuration::COMPANY . '</span>
                 </a>';
-    
-        $html.= '<div class="sidebar">
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+        $html.= '<div class="sidebar">';
+
+        $html.= '<div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
                         <img src="' . $img . '" class="img-circle elevation-2 profile-pic-small" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">' . $name . '</a>
+                        ' . $name . '
                     </div>
                 </div>';
 
