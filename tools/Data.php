@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Data.php  General queris and views.
+ * Data.php  General queries and views.
  *
  * Copyright (C) 2022 Agronorte <alboresmariano@gmail.com>
  *
